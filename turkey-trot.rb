@@ -37,10 +37,10 @@ module TurkeyTrot
             type = params[:type]
             Mail.deliver do
               to 'dennis.kuczynski@gmail.com'
-              from 'dennis.kuczynski@gmail.com'
               cc 'leslie_kuczynski@yahoo.com'
+              from 'dennis.kuczynski@gmail.com'
               subject "Turkey Trot New %s" % [type]
-              body "Name:\t%s\nEmail:\t%sType:\t%s\n" % [name, email, type]
+              body "Name:\t%s<br/>Email:\t%s<br/>Type:\t%s" % [name, email, type]
             end
             redirect '/thanks.html'         
         end
