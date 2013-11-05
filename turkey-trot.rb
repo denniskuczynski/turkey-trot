@@ -1,6 +1,20 @@
 require 'rubygems'
 require 'sinatra/base'
 
+require 'mail'
+
+Mail.defaults do
+  delivery_method :smtp, {
+    :address => 'smtp.sendgrid.net',
+    :port => '587',
+    :domain => 'heroku.com',
+    :user_name => ENV['SENDGRID_USERNAME'],
+    :password => ENV['SENDGRID_PASSWORD'],
+    :authentication => :plain,
+    :enable_starttls_auto => true
+  }
+end
+
 module TurkeyTrot
     class Server < Sinatra::Base
 
@@ -18,8 +32,17 @@ module TurkeyTrot
         end
 
         post '/register' do
-            puts params.inspect
-             redirect '/thanks.html'
+            name = params[:name]
+            email = params[:email]
+            type = params[:type]
+            Mail.deliver do
+              to 'dennis.kuczynski@gmail.com'
+              from 'dennis.kuczynski@gmail.com'
+              cc 'leslie_kuczynski@yahoo.com'
+              subject "Turkey Trot New %s" % [type]
+              body "Name:\t%s\nEmail:\t%sType:\t%s\n" % [name, email, type]
+            end
+            redirect '/thanks.html'         
         end
         
     end
