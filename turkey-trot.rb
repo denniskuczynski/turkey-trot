@@ -40,7 +40,7 @@ module TurkeyTrot
               cc 'leslie_kuczynski@yahoo.com'
               from 'dennis.kuczynski@gmail.com'
               subject "Turkey Trot New %s" % [type]
-              body "Name:\t%s<br/>Email:\t%s<br/>Type:\t%s" % [name, email, type]
+              body "Name:\t%s\nEmail:\t%s\nType:\t%s" % [name, email, type]
             end
             redirect '/thanks.html'         
         end
